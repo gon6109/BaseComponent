@@ -43,12 +43,12 @@ namespace BaseComponent
         /// <summary>
         /// アニメーションを追加する
         /// </summary>
+        /// <param name="object2D">アニメーションするオブジェクト</param>
         /// <param name="animation">アニメーション</param>
         /// <param name="slot">スロット</param>
-        public void AddAnimation(Animation animation, int slot = 0)
+        public void AddAnimation(asd.DrawnObject2D object2D, Animation animation, int slot = 0)
         {
-            if (Owner is asd.DrawnObject2D object2D)
-                animations.Add(slot, animation.GetAnimationCoRutine(object2D));
+            animations.Add(slot, animation.GetAnimationCoRutine(object2D));
         }
     }
 }
