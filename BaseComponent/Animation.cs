@@ -79,7 +79,7 @@ namespace BaseComponent
         IEnumerator<object> GetMoveCoRutine(asd.DrawnObject2D object2D, MoveAnimationElement move)
         {
             asd.Vector2DF start = move.isRequireFrom ? move.from : object2D.Position;
-            for (int i = 0; i < move.frame; i++)
+            for (int i = 1; i <= move.frame; i++)
             {
                 object2D.Position = new asd.Vector2DF(GetEasing(move.easing, i, start.X, move.to.X, move.frame), GetEasing(move.easing, i, start.Y, move.to.Y, move.frame));
                 yield return null;
@@ -89,7 +89,7 @@ namespace BaseComponent
         IEnumerator<object> GetScaleCoRutine(asd.DrawnObject2D object2D, ScaleAnimationElement scale)
         {
             asd.Vector2DF start = scale.isRequireFrom ? scale.from : object2D.Scale;
-            for (int i = 0; i < scale.frame; i++)
+            for (int i = 1; i <= scale.frame; i++)
             {
                 object2D.Scale = new asd.Vector2DF(GetEasing(scale.easing, i, start.X, scale.to.X, scale.frame), GetEasing(scale.easing, i, start.Y, scale.to.Y, scale.frame));
                 yield return null;
@@ -99,7 +99,7 @@ namespace BaseComponent
         IEnumerator<object> GetRotateCoRutine(asd.DrawnObject2D object2D, RotateAnimationElement rotate)
         {
             float start = rotate.isRequireFrom ? rotate.from : object2D.Angle;
-            for (int i = 0; i < rotate.frame; i++)
+            for (int i = 1; i <= rotate.frame; i++)
             {
                 object2D.Angle = GetEasing(rotate.easing, i, start, rotate.to, rotate.frame);
                 yield return null;
@@ -120,7 +120,8 @@ namespace BaseComponent
 
         float GetEasing(Easing easing, int current, float start, float end, int frame)
         {
-            float s = 0.2f;
+            if (current == 0) return start;
+            if (current == frame) return end;
 
             float t = (float)current / frame;
             if (current > frame) t = 1;
@@ -133,50 +134,56 @@ namespace BaseComponent
                 case Easing.Linear:
                     return start + d * t;
                 case Easing.InSine:
-                    return -d * (float)Math.Cos(t * asd.MathHelper.DegreeToRadian(90)) + end + start;
+                    return -d * (float)Math.Cos(t * asd.MathHelper.DegreeToRadian(90)) + d + start;
                 case Easing.OutSine:
                     return d * (float)Math.Sin(t * asd.MathHelper.DegreeToRadian(90)) + start;
                 case Easing.InOutSine:
                     return -d / 2 * ((float)Math.Cos(t * Math.PI) - 1) + start;
                 case Easing.InQuad:
-                    return -d * t * t + start;
+                    return d * t * t + start;
                 case Easing.OutQuad:
-                    return -d * t * (t - 2) + start;
+                    return d * t * (2 - t) + start;
                 case Easing.InOutQuad:
-                    if (t / 2 < 1)
-                        return d / 2 * t * t + start;
-                    --t;
-                    return -d * (t * (t - 2) - 1) + start;
+                    return d * (t < 0.5 ? 2 * t * t : t * (4 - 2 * t) - 1) + start;
                 case Easing.InCubic:
                     return d * t * t * t + start;
                 case Easing.OutCubic:
-                    --t;
-                    return d * (t * t * t + 1) + start;
+                    return d * (--t * t * t + 1) + start;
                 case Easing.InOutCubic:
-                    if (t / 2 < 1)
-                        return d / 2 * t * t * t + start;
-                    t -= 2;
-                    return d / 2 * (t * t * t + 2) + start;
+                    return d * (t < 0.5f ? 4 * t * t * t : 1 + (--t) * (2 * t) * (2 * t)) + start;
                 case Easing.InQuart:
                     return d * t * t * t * t + start;
                 case Easing.OutQuart:
-                    --t;
-                    return -d * (t * t * t * t - 1) + start;
+                    return -d * (--t * t * t * t - 1) + start;
                 case Easing.InOutQuart:
-                    if (t / 2 < 1)
-                        return d / 2 * t * t * t * t + start;
-                    t -= 2;
-                    return -d / 2 * (t * t * t * t - 2) + start;
+                    if (t < 0.5)
+                    {
+                        t *= t;
+                        return d * 8 * t * t + start;
+                    }
+                    else
+                    {
+                        t = (--t) * t;
+                        return d * (1 - 8 * t * t) + start;
+                    }
                 case Easing.InQuint:
                     return d * t * t * t * t * t + start;
                 case Easing.OutQuint:
-                    --t;
-                    return d * (t * t * t * t * t + 1) + start;
+                    return d * (--t * t * t * t * t + 1) + start;
                 case Easing.InOutQuint:
-                    if (t / 2 < 1)
-                        return d / 2 * t * t * t * t * t + start;
-                    t -= 2;
-                    return d / 2 * (t * t * t * t * t + 2) + start;
+                    {
+                        float t2;
+                        if (t < 0.5)
+                        {
+                            t2 = t * t;
+                            return d * 16 * t * t2 * t2 + start;
+                        }
+                        else
+                        {
+                            t2 = (--t) * t;
+                            return d * (1 + 16 * t * t2 * t2) + start;
+                        }
+                    }
                 case Easing.InExpo:
                     return t == 0.0f ? start : d * (float)Math.Pow(2, 10 * (t - 1)) + start;
                 case Easing.OutExpo:
@@ -186,33 +193,40 @@ namespace BaseComponent
                         return start;
                     if (t == end)
                         return end;
-                    if (t / 2 < 1)
-                        return d / 2 * (float)Math.Pow(2, 10 * (t - 1)) + start;
-                    --t;
-                    return d / 2 * (-(float)Math.Pow(2, -10 * t) + 2) + start;
-                case Easing.InCirc:
-                    return -d * ((float)Math.Sqrt(1 - t * t) - 1) + start;
-                case Easing.OutCirc:
-                    --t;
-                    return d * (float)Math.Sqrt(1 - t * t) + start;
-                case Easing.InOutCirc:
-                    if (t / 2 < 1)
-                        return -d / 2 * ((float)Math.Sqrt(1 - t * t) - 1) + start;
-                    t -= 2;
-                    return d / 2 * ((float)Math.Sqrt(1 - t * t) + 1) + start;
-                case Easing.InBack:
-                    return d * t * t * ((s + 1) * t - s) + start;
-                case Easing.OutBack:
-                    --t;
-                    return d * (t * t * ((s + 1) * t * s) + 1) + start;
-                case Easing.InOutBack:
-                    s *= 1.525f;
-                    if (t / 2 < 1)
+                    if (t < 0.5)
                     {
-                        return d * (t * t * ((s + 1) * t - s)) + start;
+                        return d * ((float)Math.Pow(2, 16 * t) - 1) / 510 + start;
                     }
-                    t -= 2;
-                    return d / 2 * (t * t * ((s + 1) * t + s) + 2) + start;
+                    else
+                    {
+                        return d * (1 - 0.5f * (float)Math.Pow(2, -16 * (t - 0.5))) + start;
+                    }
+                case Easing.InCirc:
+                    return d * (1 - (float)Math.Sqrt(1 - t)) + start;
+                case Easing.OutCirc:
+                    return d * (float)Math.Sqrt(t) + start;
+                case Easing.InOutCirc:
+                    if (t < 0.5)
+                    {
+                        return d * (1 - (float)Math.Sqrt(1 - 2 * t)) * 0.5f + start;
+                    }
+                    else
+                    {
+                        return d * (1 + (float)Math.Sqrt(2 * t - 1)) * 0.5f + start;
+                    }
+                case Easing.InBack:
+                    return d * t * t * (2.70158f * t - 1.70158f) + start;
+                case Easing.OutBack:
+                    return d * (1 + (--t) * t * (2.70158f * t + 1.70158f)) + start;
+                case Easing.InOutBack:
+                    if (t < 0.5)
+                    {
+                        return d * t * t * (7 * t - 2.5f) * 2 + start;
+                    }
+                    else
+                    {
+                        return d * (1 + (--t) * t * 2 * (7 * t + 2.5f)) + start;
+                    }
                 case Easing.InElastic:
                     return d * t * t * t * t * (float)Math.Sin(t * Math.PI * 4.5) + start;
                 case Easing.OutElastic:
@@ -239,30 +253,18 @@ namespace BaseComponent
                         }
                     }
                 case Easing.InBounce:
-                    return end - GetEasing(Easing.OutBounce, current, 0, d, frame) + start;
+                    return d * (float)Math.Pow(2, 6 * (t - 1)) * Math.Abs((float)Math.Sin(t * Math.PI * 3.5)) + start;
                 case Easing.OutBounce:
-                    if (t < 1 / 2.75)
-                        return d * (7.5625f * t * t) + start;
-                    else if (t < 2 / 2.75)
-                    {
-                        t -= 1.5f / 2.75f;
-                        return d * (7.5625f * t * t + 0.75f) + start;
-                    }
-                    else if (t < 2.5 / 2.75)
-                    {
-                        t -= 2.25f / 2.75f;
-                        return d * (7.5625f * t * t + 0.9375f) + start;
-                    }
-                    else
-                    {
-                        t -= 2.625f / 2.75f;
-                        return d * (7.5625f * t * t + 0.984375f) + start;
-                    }
+                    return d * (1 - (float)Math.Pow(2, -6 * t) * Math.Abs((float)Math.Cos(t * (float)Math.PI * 3.5))) + start;
                 case Easing.InOutBounce:
-                    if (t < 0.5f)
-                        return GetEasing(Easing.InBounce, current * 2, d, end, frame) * 0.5f + start;
+                    if (t < 0.5)
+                    {
+                        return d * 8 * (float)Math.Pow(2, 8 * (t - 1)) * Math.Abs((float)Math.Sin(t * (float)Math.PI * 7)) + start;
+                    }
                     else
-                        return GetEasing(Easing.OutBounce, current * 2 - frame, 0, d, frame) * 0.5f + start + d * 0.5f;
+                    {
+                        return d * (1 - 8 * (float)Math.Pow(2, -8 * t) * Math.Abs((float)Math.Sin(t * (float)Math.PI * 7))) + start;
+                    }
                 default:
                     return 0;
             }
@@ -378,7 +380,7 @@ namespace BaseComponent
 
         public void Sleep(int frame)
         {
-            var element = new ScaleAnimationElement();
+            var element = new SleepAnimationElement();
             element.frame = frame > 0 ? frame : 1;
             element.isRequireFrom = false;
             animationElements.Add(element);
