@@ -29,16 +29,40 @@ namespace BaseComponent
                 switch (item)
                 {
                     case MoveAnimationElement move:
-                        yield return GetMoveCoRutine(object2D, move);
+                        {
+                            var coRutine = GetMoveCoRutine(object2D, move);
+                            while (coRutine.MoveNext())
+                            {
+                                yield return null;
+                            }
+                        }
                         break;
                     case ScaleAnimationElement scale:
-                        yield return GetScaleCoRutine(object2D, scale);
+                        {
+                            var coRutine = GetScaleCoRutine(object2D, scale);
+                            while (coRutine.MoveNext())
+                            {
+                                yield return null;
+                            }
+                        }
                         break;
                     case RotateAnimationElement rotate:
-                        yield return GetRotateCoRutine(object2D, rotate);
+                        {
+                            var coRutine = GetRotateCoRutine(object2D, rotate);
+                            while (coRutine.MoveNext())
+                            {
+                                yield return null;
+                            }
+                        }
                         break;
                     case AlphaAnimationElement alpha:
-                        yield return GetAlphaCoRutine(object2D, alpha);
+                        {
+                            var coRutine = GetAlphaCoRutine(object2D, alpha);
+                            while (coRutine.MoveNext())
+                            {
+                                yield return null;
+                            }
+                        }
                         break;
                     case SleepAnimationElement sleep:
                         for (int i = 0; i < sleep.frame; i++)
