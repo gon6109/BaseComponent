@@ -8,7 +8,7 @@ namespace BaseComponent
 {
     class AnimationComponent : asd.Object2DComponent
     {
-        IEnumerator<object> animation;
+        Dictionary<int, IEnumerator<object>> animations;
 
         /// <summary>
         /// アニメーションしているか
@@ -20,7 +20,18 @@ namespace BaseComponent
         /// </summary>
         protected override void OnUpdate()
         {
-            IsAnimating = animation?.MoveNext() ?? false;
+            List<int> removeAnimationKeys = new List<int>();
+            foreach (var item in animations)
+            {
+                if (!item.Value.MoveNext()) removeAnimationKeys.Add(item.Key);
+            }
+
+            foreach (var item in removeAnimationKeys)
+            {
+                animations.Remove(item);
+            }
+
+            IsAnimating = animations.Count() > 0;
             base.OnUpdate();
         }
 
@@ -31,7 +42,8 @@ namespace BaseComponent
         /// <param name="slot">スロット</param>
         public void AddAnimation(Animation animation, int slot = 0)
         {
-
+            if (Owner is asd.DrawnObject2D object2D)
+                animations.Add(slot, animation.GetAnimationCoRutine(object2D));
         }
     }
 }
