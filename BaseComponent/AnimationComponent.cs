@@ -10,6 +10,11 @@ namespace BaseComponent
     {
         Dictionary<int, IEnumerator<object>> animations;
 
+        public AnimationComponent()
+        {
+            animations = new Dictionary<int, IEnumerator<object>>();
+        }
+
         /// <summary>
         /// アニメーションしているか
         /// </summary>
