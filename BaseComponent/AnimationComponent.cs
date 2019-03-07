@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BaseComponent
 {
-    class AnimationComponent : asd.Object2DComponent
+    public class AnimationComponent : asd.Object2DComponent
     {
         Dictionary<int, IEnumerator<object>> animations;
 
