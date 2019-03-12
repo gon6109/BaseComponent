@@ -18,7 +18,7 @@ namespace BaseComponent
         /// <summary>
         /// アニメーションしているか
         /// </summary>
-        public bool IsAnimating { get; private set; }
+        public bool IsAnimating => animations.Count > 0;
 
         /// <summary>
         /// 更新処理
@@ -35,8 +35,6 @@ namespace BaseComponent
             {
                 animations.Remove(item);
             }
-
-            IsAnimating = animations.Count() > 0;
             base.OnUpdate();
         }
 
