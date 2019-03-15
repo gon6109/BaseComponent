@@ -11,10 +11,21 @@ namespace BaseComponent.UI
     /// </summary>
     public class UIElement : asd.Object2DComponent
     {
+        private bool _isFocused;
+
         /// <summary>
         /// フォーカスされているか
         /// </summary>
-        public virtual bool IsFocused { get; set; }
+        public virtual bool IsFocused
+        {
+            get => _isFocused;
+            set
+            {
+                _isFocused = value;
+                OnChangedFocus(_isFocused);
+            }
+
+        }
 
         /// <summary>
         /// 有効か否か
@@ -45,6 +56,11 @@ namespace BaseComponent.UI
         /// 要素のサイズ
         /// </summary>
         public asd.Vector2DF Size { get; set; }
+
+        /// <summary>
+        /// フォーカス変更時のイベント
+        /// </summary>
+        public event Action<bool> OnChangedFocus = delegate { };
 
         /// <summary>
         /// 接続を消去
