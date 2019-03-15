@@ -24,7 +24,6 @@ namespace BaseComponent.UI
                 _isFocused = value;
                 OnChangedFocus(_isFocused);
             }
-
         }
 
         /// <summary>

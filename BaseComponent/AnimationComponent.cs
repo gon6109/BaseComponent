@@ -46,7 +46,7 @@ namespace BaseComponent
         /// <param name="slot">スロット</param>
         public void AddAnimation(asd.DrawnObject2D object2D, Animation animation, int slot = 0)
         {
-            animations.Add(slot, animation.GetAnimationCoroutine(object2D));
+            animations[slot] = animation.GetAnimationCoroutine(object2D);
         }
     }
 }
