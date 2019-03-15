@@ -72,5 +72,10 @@ namespace BaseComponent.UI
             Right = null;
             IsFocused = false;
         }
+
+        public UIElement()
+        {
+            IsEnable = true;
+        }
     }
 }
