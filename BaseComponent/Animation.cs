@@ -22,7 +22,7 @@ namespace BaseComponent
             animationElements = new List<BaseAnimationElement>();
         }
 
-        public IEnumerator<object> GetAnimationCoRutine(asd.DrawnObject2D object2D)
+        public IEnumerator<object> GetAnimationCoroutine(asd.DrawnObject2D object2D)
         {
             foreach (var item in animationElements)
             {
@@ -30,7 +30,7 @@ namespace BaseComponent
                 {
                     case MoveAnimationElement move:
                         {
-                            var coRutine = GetMoveCoRutine(object2D, move);
+                            var coRutine = GetMoveCoroutine(object2D, move);
                             while (coRutine.MoveNext())
                             {
                                 yield return null;
@@ -39,7 +39,7 @@ namespace BaseComponent
                         break;
                     case ScaleAnimationElement scale:
                         {
-                            var coRutine = GetScaleCoRutine(object2D, scale);
+                            var coRutine = GetScaleCoroutine(object2D, scale);
                             while (coRutine.MoveNext())
                             {
                                 yield return null;
@@ -48,7 +48,7 @@ namespace BaseComponent
                         break;
                     case RotateAnimationElement rotate:
                         {
-                            var coRutine = GetRotateCoRutine(object2D, rotate);
+                            var coRutine = GetRotateCoroutine(object2D, rotate);
                             while (coRutine.MoveNext())
                             {
                                 yield return null;
@@ -57,7 +57,7 @@ namespace BaseComponent
                         break;
                     case AlphaAnimationElement alpha:
                         {
-                            var coRutine = GetAlphaCoRutine(object2D, alpha);
+                            var coRutine = GetAlphaCoroutine(object2D, alpha);
                             while (coRutine.MoveNext())
                             {
                                 yield return null;
@@ -76,7 +76,7 @@ namespace BaseComponent
             }
         }
 
-        IEnumerator<object> GetMoveCoRutine(asd.DrawnObject2D object2D, MoveAnimationElement move)
+        IEnumerator<object> GetMoveCoroutine(asd.DrawnObject2D object2D, MoveAnimationElement move)
         {
             asd.Vector2DF start = move.isRequireFrom ? move.from : object2D.Position;
             for (int i = 1; i <= move.frame; i++)
@@ -86,7 +86,7 @@ namespace BaseComponent
             }
         }
 
-        IEnumerator<object> GetScaleCoRutine(asd.DrawnObject2D object2D, ScaleAnimationElement scale)
+        IEnumerator<object> GetScaleCoroutine(asd.DrawnObject2D object2D, ScaleAnimationElement scale)
         {
             asd.Vector2DF start = scale.isRequireFrom ? scale.from : object2D.Scale;
             for (int i = 1; i <= scale.frame; i++)
@@ -96,7 +96,7 @@ namespace BaseComponent
             }
         }
 
-        IEnumerator<object> GetRotateCoRutine(asd.DrawnObject2D object2D, RotateAnimationElement rotate)
+        IEnumerator<object> GetRotateCoroutine(asd.DrawnObject2D object2D, RotateAnimationElement rotate)
         {
             float start = rotate.isRequireFrom ? rotate.from : object2D.Angle;
             for (int i = 1; i <= rotate.frame; i++)
@@ -106,7 +106,7 @@ namespace BaseComponent
             }
         }
 
-        IEnumerator<object> GetAlphaCoRutine(asd.DrawnObject2D object2D, AlphaAnimationElement alpha)
+        IEnumerator<object> GetAlphaCoroutine(asd.DrawnObject2D object2D, AlphaAnimationElement alpha)
         {
             Byte start = alpha.isRequireFrom ? alpha.from : object2D.Color.A;
             for (int i = 0; i < alpha.frame; i++)
