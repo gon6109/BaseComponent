@@ -10,7 +10,7 @@ namespace BaseComponent.UI
     /// <summary>
     /// UI用レイヤー
     /// </summary>
-    public abstract class UILayer2D : asd.Layer2D
+    public abstract class UILayer2D : ScalingLayer2D
     {
         private UIElement _focusedUIElement;
 
