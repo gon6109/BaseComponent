@@ -12,6 +12,7 @@ namespace BaseComponent
     public class ScalingLayer2D : asd.Layer2D
     {
         private bool _isFixAspectRatio;
+        private bool _isEnableScaling;
 
         /// <summary>
         /// 表示する範囲
@@ -40,6 +41,20 @@ namespace BaseComponent
         /// Updating時自動的にスケーリングするか
         /// </summary>
         public bool IsUpdateScalingAuto { get; set; }
+
+        /// <summary>
+        /// スケーリングを有効にするか
+        /// </summary>
+        public bool IsEnableScaling
+        {
+            get => _isEnableScaling;
+            set
+            {
+                _isEnableScaling = value;
+                Camera.IsDrawn = value;
+                Camera.IsUpdated = value;
+            }
+        }
 
         public ScalingLayer2D()
         {
