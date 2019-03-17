@@ -21,7 +21,7 @@ namespace BaseComponent
         /// <summary>
         /// カメラ
         /// </summary>
-        public asd.CameraObject2D Camera { get; protected set; }
+        public asd.CameraObject2D Camera { get; }
 
         /// <summary>
         /// 縦横比を固定するか
