@@ -272,22 +272,26 @@ namespace BaseComponent
 
         public void Move(asd.Vector2DF from, asd.Vector2DF to, int frame, Easing easing = Easing.Linear)
         {
-            var element = new MoveAnimationElement();
-            element.from = from;
-            element.to = to;
-            element.frame = frame > 0 ? frame : 1;
-            element.easing = easing;
-            element.isRequireFrom = true;
+            var element = new MoveAnimationElement
+            {
+                from = from,
+                to = to,
+                frame = frame > 0 ? frame : 1,
+                easing = easing,
+                isRequireFrom = true
+            };
             animationElements.Add(element);
         }
 
         public void MoveTo(asd.Vector2DF to, int frame, Easing easing = Easing.Linear)
         {
-            var element = new MoveAnimationElement();
-            element.to = to;
-            element.frame = frame > 0 ? frame : 1;
-            element.easing = easing;
-            element.isRequireFrom = false;
+            var element = new MoveAnimationElement
+            {
+                to = to,
+                frame = frame > 0 ? frame : 1,
+                easing = easing,
+                isRequireFrom = false
+            };
             animationElements.Add(element);
         }
 
@@ -299,22 +303,26 @@ namespace BaseComponent
 
         public void Scale(asd.Vector2DF from, asd.Vector2DF to, int frame, Easing easing = Easing.Linear)
         {
-            var element = new ScaleAnimationElement();
-            element.from = from;
-            element.to = to;
-            element.frame = frame > 0 ? frame : 1;
-            element.easing = easing;
-            element.isRequireFrom = true;
+            var element = new ScaleAnimationElement
+            {
+                from = from,
+                to = to,
+                frame = frame > 0 ? frame : 1,
+                easing = easing,
+                isRequireFrom = true
+            };
             animationElements.Add(element);
         }
 
         public void ScaleTo(asd.Vector2DF to, int frame, Easing easing = Easing.Linear)
         {
-            var element = new ScaleAnimationElement();
-            element.to = to;
-            element.frame = frame > 0 ? frame : 1;
-            element.easing = easing;
-            element.isRequireFrom = false;
+            var element = new ScaleAnimationElement
+            {
+                to = to,
+                frame = frame > 0 ? frame : 1,
+                easing = easing,
+                isRequireFrom = false
+            };
             animationElements.Add(element);
         }
 
@@ -326,22 +334,26 @@ namespace BaseComponent
 
         public void Rotate(float from, float to, int frame, Easing easing = Easing.Linear)
         {
-            var element = new RotateAnimationElement();
-            element.from = from;
-            element.to = to;
-            element.frame = frame > 0 ? frame : 1;
-            element.easing = easing;
-            element.isRequireFrom = true;
+            var element = new RotateAnimationElement
+            {
+                from = from,
+                to = to,
+                frame = frame > 0 ? frame : 1,
+                easing = easing,
+                isRequireFrom = true
+            };
             animationElements.Add(element);
         }
 
         public void RotateTo(float to, int frame, Easing easing = Easing.Linear)
         {
-            var element = new RotateAnimationElement();
-            element.to = to;
-            element.frame = frame > 0 ? frame : 1;
-            element.easing = easing;
-            element.isRequireFrom = false;
+            var element = new RotateAnimationElement
+            {
+                to = to,
+                frame = frame > 0 ? frame : 1,
+                easing = easing,
+                isRequireFrom = false
+            };
             animationElements.Add(element);
         }
 
@@ -353,22 +365,26 @@ namespace BaseComponent
 
         public void Alpha(byte from, byte to, int frame, Easing easing = Easing.Linear)
         {
-            var element = new AlphaAnimationElement();
-            element.from = from;
-            element.to = to;
-            element.frame = frame > 0 ? frame : 1;
-            element.easing = easing;
-            element.isRequireFrom = true;
+            var element = new AlphaAnimationElement
+            {
+                from = from,
+                to = to,
+                frame = frame > 0 ? frame : 1,
+                easing = easing,
+                isRequireFrom = true
+            };
             animationElements.Add(element);
         }
 
         public void AlphaTo(byte to, int frame, Easing easing = Easing.Linear)
         {
-            var element = new AlphaAnimationElement();
-            element.to = to;
-            element.frame = frame > 0 ? frame : 1;
-            element.easing = easing;
-            element.isRequireFrom = false;
+            var element = new AlphaAnimationElement
+            {
+                to = to,
+                frame = frame > 0 ? frame : 1,
+                easing = easing,
+                isRequireFrom = false
+            };
             animationElements.Add(element);
         }
 
@@ -380,9 +396,11 @@ namespace BaseComponent
 
         public void Sleep(int frame)
         {
-            var element = new SleepAnimationElement();
-            element.frame = frame > 0 ? frame : 1;
-            element.isRequireFrom = false;
+            var element = new SleepAnimationElement
+            {
+                frame = frame > 0 ? frame : 1,
+                isRequireFrom = false
+            };
             animationElements.Add(element);
         }
 

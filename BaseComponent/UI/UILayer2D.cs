@@ -104,10 +104,10 @@ namespace BaseComponent.UI
         {
             if (!IsMoveFocus) return;
 
-            if (Input.GetInputState(Inputs.Up) == 1) FocusedUIElement = FocusedUIElement.Up != null ? FocusedUIElement.Up : FocusedUIElement;
-            if (Input.GetInputState(Inputs.Right) == 1) FocusedUIElement = FocusedUIElement.Right != null ? FocusedUIElement.Right : FocusedUIElement;
-            if (Input.GetInputState(Inputs.Left) == 1) FocusedUIElement = FocusedUIElement.Left != null ? FocusedUIElement.Left : FocusedUIElement;
-            if (Input.GetInputState(Inputs.Down) == 1) FocusedUIElement = FocusedUIElement.Down != null ? FocusedUIElement.Down : FocusedUIElement;
+            if (Input.GetInputState(Inputs.Up) == 1) FocusedUIElement = FocusedUIElement.Up ?? FocusedUIElement;
+            if (Input.GetInputState(Inputs.Right) == 1) FocusedUIElement = FocusedUIElement.Right ?? FocusedUIElement;
+            if (Input.GetInputState(Inputs.Left) == 1) FocusedUIElement = FocusedUIElement.Left ?? FocusedUIElement;
+            if (Input.GetInputState(Inputs.Down) == 1) FocusedUIElement = FocusedUIElement.Down ?? FocusedUIElement;
             base.OnUpdating();
         }
     }

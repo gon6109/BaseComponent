@@ -90,10 +90,12 @@ namespace BaseComponent
         /// <returns>複製されたインスタンス</returns>
         public object Clone()
         {
-            AnimationObject2D clone = new AnimationObject2D();
-            clone._textures = new List<asd.Texture2D>(_textures);
-            clone.IsOneLoop = IsOneLoop;
-            clone.Interval = Interval;
+            AnimationObject2D clone = new AnimationObject2D
+            {
+                _textures = new List<asd.Texture2D>(_textures),
+                IsOneLoop = IsOneLoop,
+                Interval = Interval
+            };
             return clone;
         }
     }
