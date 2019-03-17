@@ -12,7 +12,7 @@ namespace BaseComponent
     public class ScalingLayer2D : asd.Layer2D
     {
         private bool _isFixAspectRatio;
-        private bool _isEnableScaling;
+        private bool _isEnableScaling = true;
 
         /// <summary>
         /// 表示する範囲
