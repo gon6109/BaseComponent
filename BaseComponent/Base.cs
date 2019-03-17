@@ -8,7 +8,9 @@ namespace BaseComponent
 {
     /// <summary>
     /// 基本設定
+    /// 削除予定
     /// </summary>
+    [Obsolete]
     public static class Base
     {
         public static asd.Vector2DI ScreenSize = new asd.Vector2DI(1920, 1080);
