@@ -62,6 +62,19 @@ namespace BaseComponent.UI
         public event Action<bool> OnChangedFocus = delegate { };
 
         /// <summary>
+        /// 選択されたか
+        /// </summary>
+        public bool IsSelected
+        {
+            get
+            {
+                if (Owner?.Layer is UILayer2D layer)
+                    return layer.IsMoveFocus && IsEnable && IsFocused && Input.GetInputState(Inputs.A) == 1;
+                return false;
+            }
+        }
+
+        /// <summary>
         /// 接続を消去
         /// </summary>
         public void ResetConnection()
