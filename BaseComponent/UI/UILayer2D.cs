@@ -37,6 +37,11 @@ namespace BaseComponent.UI
 
         public bool IsMoveFocus { get; set; }
 
+        public UILayer2D()
+        {
+            IsMoveFocus = true;
+        }
+
         protected override void OnAdded()
         {
             base.OnAdded();
