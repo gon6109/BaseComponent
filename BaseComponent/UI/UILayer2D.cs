@@ -10,7 +10,7 @@ namespace BaseComponent.UI
     /// <summary>
     /// UI用レイヤー
     /// </summary>
-    public abstract class UILayer2D : ScalingLayer2D
+    public class UILayer2D : ScalingLayer2D
     {
         private UIElement _focusedUIElement;
 
@@ -107,12 +107,13 @@ namespace BaseComponent.UI
 
         protected override void OnUpdating()
         {
-            if (!IsMoveFocus) return;
-
-            if (Input.GetInputState(Inputs.Up) == 1) FocusedUIElement = FocusedUIElement.Up ?? FocusedUIElement;
-            if (Input.GetInputState(Inputs.Right) == 1) FocusedUIElement = FocusedUIElement.Right ?? FocusedUIElement;
-            if (Input.GetInputState(Inputs.Left) == 1) FocusedUIElement = FocusedUIElement.Left ?? FocusedUIElement;
-            if (Input.GetInputState(Inputs.Down) == 1) FocusedUIElement = FocusedUIElement.Down ?? FocusedUIElement;
+            if (IsMoveFocus)
+            {
+                if (Input.GetInputState(Inputs.Up) == 1) FocusedUIElement = FocusedUIElement.Up ?? FocusedUIElement;
+                if (Input.GetInputState(Inputs.Right) == 1) FocusedUIElement = FocusedUIElement.Right ?? FocusedUIElement;
+                if (Input.GetInputState(Inputs.Left) == 1) FocusedUIElement = FocusedUIElement.Left ?? FocusedUIElement;
+                if (Input.GetInputState(Inputs.Down) == 1) FocusedUIElement = FocusedUIElement.Down ?? FocusedUIElement;
+            }
             base.OnUpdating();
         }
     }
