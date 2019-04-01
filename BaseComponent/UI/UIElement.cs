@@ -12,6 +12,7 @@ namespace BaseComponent.UI
     public class UIElement : asd.Object2DComponent
     {
         private bool _isFocused;
+        private bool _isEnable;
 
         /// <summary>
         /// フォーカスされているか
@@ -29,7 +30,15 @@ namespace BaseComponent.UI
         /// <summary>
         /// 有効か否か
         /// </summary>
-        public virtual bool IsEnable { get; set; }
+        public virtual bool IsEnable
+        {
+            get => _isEnable;
+            set
+            {
+                _isEnable = value;
+                OnChangedEnable(_isEnable);
+            }
+        }
 
         /// <summary>
         /// 上への参照
@@ -60,6 +69,11 @@ namespace BaseComponent.UI
         /// フォーカス変更時のイベント
         /// </summary>
         public event Action<bool> OnChangedFocus = delegate { };
+
+        /// <summary>
+        /// IsEnable変更時のイベント
+        /// </summary>
+        public event Action<bool> OnChangedEnable = delegate { };
 
         /// <summary>
         /// 選択されたか
