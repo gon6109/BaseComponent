@@ -102,7 +102,7 @@ namespace BaseComponent.UI
                 }
             }
 
-            _focusedUIElement = elements.LastOrDefault();
+            FocusedUIElement = elements.LastOrDefault();
         }
 
         protected override void OnUpdating()
