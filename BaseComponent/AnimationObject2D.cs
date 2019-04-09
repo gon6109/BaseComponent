@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+
 namespace BaseComponent
 {
     ///<summary>
@@ -14,7 +16,7 @@ namespace BaseComponent
         /// <summary>
         /// 切り替え間隔
         /// </summary>
-        public int Interval 
+        public int Interval
         {
             set
             {
@@ -26,7 +28,7 @@ namespace BaseComponent
                 return _interval;
             }
         }
-        
+
         /// <summary>
         /// 一周で元の状態に戻るか否か
         /// </summary>
@@ -53,6 +55,26 @@ namespace BaseComponent
                 if (texture == null) return;
                 _textures.Add(texture);
             }
+            Texture = _textures[0];
+        }
+
+        ///<summary>
+        ///連番画像を読み込む
+        ///</summary>
+        ///<param name="animationGroup">ファイル名</param>
+        ///<param name="extension">拡張子</param>
+        ///<param name="sheets">枚数</param>
+        public void LoadAnimationFileAsync(string animationGroup, string extension, int sheets)
+        {
+            Parallel.For(0, sheets, async (i) =>
+            {
+                var texture = await TextureManager.LoadTextureAsync(animationGroup + i.ToString() + "." + extension);
+                if (texture == null) return;
+                lock (this)
+                {
+                    _textures.Add(texture);
+                }
+            });
             Texture = _textures[0];
         }
 

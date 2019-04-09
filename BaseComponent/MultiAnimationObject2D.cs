@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using Microsoft.CodeAnalysis.Scripting;
 using Microsoft.CodeAnalysis.CSharp.Scripting;
+using System.Threading.Tasks;
 
 namespace BaseComponent
 {
@@ -102,6 +103,25 @@ namespace BaseComponent
         }
 
         /// <summary>
+        /// アニメーションスクリプトをロード
+        /// </summary>
+        /// <param name="path">スクリプトへのパス</param>
+        public async Task<ScriptRunner<object>> LoadAnimationScriptAsync(string path)
+        {
+            try
+            {
+                var script = CSharpScript.Create(IO.GetStream(path), globalsType: this.GetType());
+                script.Compile();
+                await script.RunAsync(this);
+                return script.CreateDelegate();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        /// <summary>
         /// アニメーションパーツを追加
         /// </summary>
         /// <param name="animationGroup">ファイル名</param>
@@ -120,10 +140,28 @@ namespace BaseComponent
         }
 
         /// <summary>
+        /// アニメーションパーツを追加
+        /// </summary>
+        /// <param name="animationGroup">ファイル名</param>
+        /// <param name="extension">拡張子</param>
+        /// <param name="sheets">枚数</param>
+        /// <param name="partName">パーツ名</param>
+        /// <param name="interval">切り替え間隔</param>
+        public void AddAnimationPartAsync(string animationGroup, string extension, int sheets, string partName, int interval)
+        {
+            AnimationPart part = new AnimationPart();
+            part.LoadAnimationFileAsync(animationGroup, extension, sheets);
+            part.Interval = interval;
+            AnimationPart[partName] = part;
+
+            if (AnimationPart.Count == 0) State = partName;
+        }
+
+        /// <summary>
         /// コピーする
         /// </summary>
         /// <param name="multiAnimationObject">コピー元</param>
-        public void Clone(MultiAnimationObject2D multiAnimationObject)
+        public void Copy(MultiAnimationObject2D multiAnimationObject)
         {
             foreach (var item in multiAnimationObject.AnimationPart)
             {
@@ -200,6 +238,20 @@ namespace BaseComponent
                 Textures.Add(texture);
                 if (i == 0) CurrentTexture = texture;
             }
+        }
+
+        public void LoadAnimationFileAsync(string animationGroup, string extension, int sheets)
+        {
+            Parallel.For(0, sheets, async (i) =>
+            {
+                var texture = await TextureManager.LoadTextureAsync(animationGroup + i.ToString() + "." + extension);
+                if (texture == null) return;
+                lock (this)
+                {
+                    Textures.Add(texture);
+                    if (i == 0) CurrentTexture = texture;
+                }
+            });
         }
 
         public void Reset()

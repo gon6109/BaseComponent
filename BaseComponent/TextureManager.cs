@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -12,12 +13,56 @@ namespace BaseComponent
     /// </summary>
     public static class TextureManager
     {
+        static ConcurrentQueue<Tuple<asd.Texture2D, string>> requets = new ConcurrentQueue<Tuple<asd.Texture2D, string>>();
+
+        /// <summary>
+        /// テクスチャをロードする
+        /// </summary>
+        /// <param name="path">パス</param>
+        /// <returns>テクスチャ</returns>
         public static asd.Texture2D LoadTexture(string path)
         {
-            var texture = asd.Engine.Graphics.CreateTexture2D(path);
-            if (texture == null) 
+            var syncObj = new object();
+
+            asd.Texture2D texture;
+            lock (syncObj)
             {
-                texture = asd.Engine.Graphics.CreateTexture2D("Static/error.png");
+                texture = asd.Engine.Graphics.CreateTexture2D(path);
+            }
+            if (texture == null)
+            {
+                lock (syncObj)
+                {
+                    texture = asd.Engine.Graphics.CreateTexture2D("Static/error.png");
+                }
+                ErrorIO.AddError(new FileNotFoundException(path + "が見つかりません"));
+            }
+            return texture;
+        }
+
+        /// <summary>
+        /// テクスチャを非同期ロードする
+        /// </summary>
+        /// <param name="path">パス</param>
+        /// <returns>テクスチャ</returns>
+        public static async Task<asd.Texture2D> LoadTextureAsync(string path)
+        {
+            var syncObj = new object();
+
+            var texture = await Task.Run(() =>
+            {
+                lock (syncObj)
+                {
+                    return asd.Engine.Graphics.CreateTexture2DAsync(path);
+                }
+            });
+
+            if (texture == null)
+            {
+                lock (syncObj)
+                {
+                    texture = asd.Engine.Graphics.CreateTexture2D("Static/error.png");
+                }
                 ErrorIO.AddError(new FileNotFoundException(path + "が見つかりません"));
             }
             return texture;
