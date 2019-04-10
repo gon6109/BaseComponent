@@ -20,5 +20,18 @@ namespace BaseComponent
             var result = temp.Buffer;
             return new MemoryStream(result);
         }
+
+        public static async Task<MemoryStream> GetStreamAsync(string path)
+        {
+            if (path == null) throw new ArgumentNullException("path is null");
+            var temp = asd.Engine.File.CreateStaticFileAsync(path);
+            if (temp == null) throw new FileNotFoundException(path + "が見つかりません");
+            await Task.Run(() =>
+            {
+                while (temp.LoadState == asd.LoadState.Loading) { }
+            });
+            var result = temp.Buffer;
+            return new MemoryStream(result);
+        }
     }
 }
