@@ -48,14 +48,12 @@ namespace BaseComponent
         public static async Task<asd.Texture2D> LoadTextureAsync(string path)
         {
             var syncObj = new object();
+            asd.Texture2D texture;
 
-            var texture = await Task.Run(() =>
+            lock (syncObj)
             {
-                lock (syncObj)
-                {
-                    return asd.Engine.Graphics.CreateTexture2DAsync(path);
-                }
-            });
+                texture = asd.Engine.Graphics.CreateTexture2DAsync(path);
+            }
 
             if (texture == null)
             {
@@ -65,6 +63,12 @@ namespace BaseComponent
                 }
                 ErrorIO.AddError(new FileNotFoundException(path + "が見つかりません"));
             }
+
+            await Task.Run(() =>
+            {
+                while (texture.LoadState == asd.LoadState.Loading) { }
+            });
+
             return texture;
         }
     }
