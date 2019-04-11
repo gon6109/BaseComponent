@@ -122,6 +122,7 @@
     <Compile Include="Base.cs" />
     <Compile Include="Color.cs" />
     <Compile Include="ErrorIO.cs" />
+    <Compile Include="LoadingScene.cs" />
     <Compile Include="ScalingLayer2D.cs" />
     <Compile Include="Input.cs" />
     <Compile Include="InputMappingIO.cs" />
