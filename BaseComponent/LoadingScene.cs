@@ -12,7 +12,7 @@ namespace BaseComponent
     /// <param name="taskCount">タスク数</param>
     /// <param name="progress">完了したタスク数</param>
     /// <returns>タスク</returns>
-    public delegate Task LoadFunc(out int taskCount, out int progress);
+    public delegate Task LoadFunc((int taskCount, int progress) info);
 
     /// <summary>
     /// ローディングシーン
@@ -32,10 +32,9 @@ namespace BaseComponent
         /// <summary>
         /// 進捗(0.0-1.0)
         /// </summary>
-        public float Progress => taskCount != 0 ? progress / (float)taskCount : 0;
+        public float Progress => info.taskCount != 0 ? info.progress / (float)info.taskCount : 0;
 
-        int taskCount = 0;
-        int progress = 0;
+        (int taskCount ,int progress) info = (0, 0);
         Task task;
         private readonly asd.Transition transition;
         private IEnumerator<object> coroutine;
@@ -55,7 +54,8 @@ namespace BaseComponent
 
         protected override void OnStartUpdating()
         {
-            task = LoadFunc(out taskCount, out progress);
+
+            task = LoadFunc(info);
             base.OnStartUpdating();
         }
 
