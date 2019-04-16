@@ -127,7 +127,6 @@
     <Compile Include="Input.cs" />
     <Compile Include="InputMappingIO.cs" />
     <Compile Include="IO.cs" />
-    <Compile Include="Memory.cs" />
     <Compile Include="MessageLayer2D.cs" />
     <Compile Include="MultiAnimationObject2D.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
