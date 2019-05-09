@@ -123,6 +123,7 @@
     <Compile Include="Color.cs" />
     <Compile Include="ErrorIO.cs" />
     <Compile Include="LoadingScene.cs" />
+    <Compile Include="RectangleLineShapeObject2D.cs" />
     <Compile Include="ScalingLayer2D.cs" />
     <Compile Include="Input.cs" />
     <Compile Include="InputMappingIO.cs" />
