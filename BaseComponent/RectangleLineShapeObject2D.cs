@@ -63,5 +63,15 @@ namespace BaseComponent
                 AddDrawnChild(item, (asd.ChildManagementMode)0b1111, asd.ChildTransformingMode.All, (asd.ChildDrawingMode)0b11);
             }
         }
+
+        protected override void OnUpdate()
+        {
+            foreach (var item in rect)
+            {
+                item.CameraGroup = CameraGroup;
+            }
+
+            base.OnUpdate();
+        }
     }
 }
