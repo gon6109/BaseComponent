@@ -9,15 +9,14 @@ namespace BaseComponent
     /// <summary>
     /// ロード用デリゲート
     /// </summary>
-    /// <param name="taskCount">タスク数</param>
-    /// <param name="progress">完了したタスク数</param>
+    /// <param name="loader">ロードするオブジェクト</param>
     /// <returns>タスク</returns>
-    public delegate Task LoadFunc((int taskCount, int progress) info);
+    public delegate Task LoadFunc(ILoader loader);
 
     /// <summary>
     /// ローディングシーン
     /// </summary>
-    public abstract class LoadingScene : asd.Scene
+    public abstract class LoadingScene : asd.Scene,ILoader
     {
         /// <summary>
         /// 次に遷移するシーン
@@ -32,9 +31,9 @@ namespace BaseComponent
         /// <summary>
         /// 進捗(0.0-1.0)
         /// </summary>
-        public float Progress => info.taskCount != 0 ? info.progress / (float)info.taskCount : 0;
+        public float Progress => ProgressInfo.taskCount != 0 ? ProgressInfo.progress / (float)ProgressInfo.taskCount : 0;
 
-        (int taskCount ,int progress) info = (0, 0);
+        public (int taskCount, int progress) ProgressInfo { get; set; } = (0, 0);
         Task task;
         private readonly asd.Transition transition;
         private IEnumerator<object> coroutine;
@@ -55,7 +54,7 @@ namespace BaseComponent
         protected override void OnStartUpdating()
         {
 
-            task = LoadFunc(info);
+            task = LoadFunc(this);
             base.OnStartUpdating();
         }
 

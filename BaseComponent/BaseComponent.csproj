@@ -21,6 +21,7 @@
     <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <LangVersion>default</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>bin\x86\Release\</OutputPath>
@@ -122,6 +123,7 @@
     <Compile Include="Base.cs" />
     <Compile Include="Color.cs" />
     <Compile Include="ErrorIO.cs" />
+    <Compile Include="ILoader.cs" />
     <Compile Include="LoadingScene.cs" />
     <Compile Include="RectangleLineShapeObject2D.cs" />
     <Compile Include="ScalingLayer2D.cs" />
