@@ -147,10 +147,10 @@ namespace BaseComponent
         /// <param name="sheets">枚数</param>
         /// <param name="partName">パーツ名</param>
         /// <param name="interval">切り替え間隔</param>
-        public void AddAnimationPartAsync(string animationGroup, string extension, int sheets, string partName, int interval)
+        public async Task AddAnimationPartAsync(string animationGroup, string extension, int sheets, string partName, int interval)
         {
             AnimationPart part = new AnimationPart();
-            part.LoadAnimationFileAsync(animationGroup, extension, sheets);
+            await part.LoadAnimationFileAsync(animationGroup, extension, sheets);
             part.Interval = interval;
             AnimationPart[partName] = part;
 
@@ -240,9 +240,9 @@ namespace BaseComponent
             }
         }
 
-        public void LoadAnimationFileAsync(string animationGroup, string extension, int sheets)
+        public async Task LoadAnimationFileAsync(string animationGroup, string extension, int sheets)
         {
-            Parallel.For(0, sheets, async (i) =>
+            for (int i = 0; i < sheets; i++)
             {
                 var texture = await TextureManager.LoadTextureAsync(animationGroup + i.ToString() + "." + extension);
                 if (texture == null) return;
@@ -251,7 +251,7 @@ namespace BaseComponent
                     Textures.Add(texture);
                     if (i == 0) CurrentTexture = texture;
                 }
-            });
+            }
         }
 
         public void Reset()
