@@ -35,7 +35,7 @@ namespace BaseComponent
                 {
                     texture = asd.Engine.Graphics.CreateTexture2D("Static/error.png");
                 }
-                ErrorIO.AddError(new FileNotFoundException(path + "が見つかりません"));
+                Logger.Error(new FileNotFoundException(path + "が見つかりません"));
             }
             return texture;
         }
@@ -61,7 +61,7 @@ namespace BaseComponent
                 {
                     texture = asd.Engine.Graphics.CreateTexture2D("Static/error.png");
                 }
-                ErrorIO.AddError(new FileNotFoundException(path + "が見つかりません"));
+                Logger.Error(new FileNotFoundException(path + "が見つかりません"));
             }
 
             await Task.Run(() =>
