@@ -114,7 +114,7 @@ namespace BaseComponent
                     break;
             }
 
-            text.Text = message;
+            text.Text = message.Replace(Environment.NewLine, " ");
             text.Font = Font;
             text.Position = new asd.Vector2DF(15, (Objects.Count(obj => obj is LogTextObject) + 1) * 17);
 
