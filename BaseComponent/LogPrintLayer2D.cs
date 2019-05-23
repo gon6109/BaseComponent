@@ -49,6 +49,13 @@ namespace BaseComponent
             Font = asd.Engine.Graphics.CreateDynamicFont("", 15, new asd.Color(255, 255, 255), 0, new asd.Color());
         }
 
+        public override void Dispose()
+        {
+            base.Dispose();
+            if (Logger.Printer == this)
+                Logger.Printer = null;
+        }
+
         public void OnAddedLog(Logger.Status status, string message)
         {
             Coroutines.Add(Print(status, message));

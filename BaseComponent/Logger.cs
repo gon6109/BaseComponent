@@ -82,6 +82,7 @@ namespace BaseComponent
         {
             var log = new Log(status, "[" + DateTime.Now.ToLongTimeString() + "] [" + status.ToString() + "]: " + message);
             Logs.Add(log);
+            Printer?.OnAddedLog(status, message);
         }
 
         /// <summary>
