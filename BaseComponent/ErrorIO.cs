@@ -10,6 +10,7 @@ namespace BaseComponent
     /// <summary>
     /// エラー出力系
     /// </summary>
+    [Obsolete]
     public static class ErrorIO
     {
         private static asd.Scene s_scene;
@@ -62,6 +63,7 @@ namespace BaseComponent
     /// <summary>
     /// エラー表示用オブジェクト
     /// </summary>
+    [Obsolete]
     class ErrorText : asd.TextObject2D
     {
         internal static asd.Layer2D layer = new asd.Layer2D();
