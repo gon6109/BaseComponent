@@ -122,8 +122,10 @@
     <Compile Include="AnimationObject2D.cs" />
     <Compile Include="Base.cs" />
     <Compile Include="Color.cs" />
+    <Compile Include="CUILogPrinter.cs" />
     <Compile Include="ErrorIO.cs" />
     <Compile Include="ILoader.cs" />
+    <Compile Include="ILogPrinter.cs" />
     <Compile Include="LoadingScene.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="RectangleLineShapeObject2D.cs" />

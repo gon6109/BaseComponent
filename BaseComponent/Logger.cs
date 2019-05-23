@@ -9,10 +9,13 @@ using System.IO;
 namespace BaseComponent
 {
     /// <summary>
-    /// ログ
+    /// ログ管理クラス
     /// </summary>
     public static class Logger
     {
+        /// <summary>
+        /// ログ
+        /// </summary>
         class Log
         {
             public Status Status { get; }
@@ -25,6 +28,9 @@ namespace BaseComponent
             }
         }
 
+        /// <summary>
+        /// ログ状態
+        /// </summary>
         public enum Status
         {
             Error,
@@ -32,30 +38,56 @@ namespace BaseComponent
             Debug
         }
 
+        /// <summary>
+        /// ログリスト
+        /// </summary>
         static List<Log> Logs { get; } = new List<Log>();
 
+        public static ILogPrinter Printer { get; set; }
+
+        /// <summary>
+        /// エラー
+        /// </summary>
+        /// <param name="obj">メッセージオブジェクト</param>
         public static void Error(object obj)
         {
             AddLog(Status.Error, obj.ToString());
         }
 
+        /// <summary>
+        /// 警告
+        /// </summary>
+        /// <param name="obj">メッセージオブジェクト</param>
         public static void Warning(object obj)
         {
             AddLog(Status.Warning, obj.ToString());
         }
 
+        /// <summary>
+        /// デバッグ
+        /// </summary>
+        /// <param name="obj">メッセージオブジェクト</param>
         [Conditional("DEBUG")]
         public static void Debug(object obj)
         {
             AddLog(Status.Debug, obj.ToString());
         }
 
+        /// <summary>
+        /// ログを記録
+        /// </summary>
+        /// <param name="status">ログ状態</param>
+        /// <param name="message">メッセージ</param>
         public static void AddLog(Status status, string message)
         {
             var log = new Log(status, "[" + DateTime.Now.ToLongTimeString() + "] [" + status.ToString() + "]: " + message);
             Logs.Add(log);
         }
 
+        /// <summary>
+        /// ログをほ存する
+        /// </summary>
+        /// <param name="path">パス</param>
         public static void Save(string path)
         {
             using (var writer = new StreamWriter(path, false))
@@ -67,6 +99,11 @@ namespace BaseComponent
             }
         }
 
+        /// <summary>
+        /// ログを非同期で保存する
+        /// </summary>
+        /// <param name="path">パス</param>
+        /// <returns>タスク</returns>
         public static async Task SaveAsync(string path)
         {
             using (var writer = new StreamWriter(path, false))
