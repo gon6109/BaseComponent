@@ -80,9 +80,10 @@ namespace BaseComponent
         /// <param name="message">メッセージ</param>
         public static void AddLog(Status status, string message)
         {
-            var log = new Log(status, "[" + DateTime.Now.ToLongTimeString() + "] [" + status.ToString() + "]: " + message);
+            string _message = "[" + DateTime.Now.ToLongTimeString() + "] [" + status.ToString() + "]: " + message;
+            var log = new Log(status, _message);
             Logs.Add(log);
-            Printer?.OnAddedLog(status, message);
+            Printer?.OnAddedLog(status, _message);
         }
 
         /// <summary>

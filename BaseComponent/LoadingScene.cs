@@ -80,7 +80,7 @@ namespace BaseComponent
             }
             if (task.IsCanceled || task.IsFaulted)
             {
-                ErrorIO.AddError(new OperationCanceledException(NextScene.ToString() + "のロードに失敗しました."));
+                Logger.Error(new OperationCanceledException(NextScene.ToString() + "のロードに失敗しました."));
             }
         }
     }
