@@ -29,6 +29,7 @@ namespace BaseComponent
             {
                 PreState = state;
                 state = value;
+                if (PreState != state) AnimationPart[value].Reset();
                 if (AnimationPart.ContainsKey(value)) Texture = AnimationPart[value].CurrentTexture;
             }
             get
