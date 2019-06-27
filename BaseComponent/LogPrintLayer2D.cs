@@ -116,11 +116,12 @@ namespace BaseComponent
 
             text.Text = message.Replace(Environment.NewLine, " ");
             text.Font = Font;
-            text.Position = new asd.Vector2DF(15, (Objects.Count(obj => obj is LogTextObject) + 1) * 17);
 
             AddObject(text);
 
             yield return null;
+
+            text.Position = new asd.Vector2DF(15, Objects.Where(obj => obj is LogTextObject).ToList().IndexOf(text) * 17);
 
             var anm = new Animation();
             anm.AlphaTo(255, 30);
