@@ -203,7 +203,7 @@ namespace BaseComponent
         /// <summary>
         /// 現在のアニメーションを最初のフレームにする
         /// </summary>
-        void ResetCurrentStateAnimation()
+        public void ResetCurrentStateAnimation()
         {
             if (AnimationPart.ContainsKey(state))
                 animationPart[state].Reset();
