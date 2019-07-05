@@ -65,13 +65,13 @@ namespace BaseComponent.UI
             {
                 foreach (var item2 in elements.Where(obj => obj != item)) 
                 {
-                    var angle = (item2.Owner.Position - item.Owner.Position).Degree;
+                    var angle = (item2.Position - item.Position).Degree;
                     if (angle >= (-item.Size).Degree && angle < new asd.Vector2DF(item.Size.X / 2, -item.Size.Y / 2).Degree)
                     {
                         if (item.Up == null) item.Up = item2;
                         else
                         {
-                            if ((item.Up.Owner.Position - item.Owner.Position).Length >= (item2.Owner.Position - item.Owner.Position).Length) item.Up = item2;
+                            if ((item.Up.Position - item.Position).Length >= (item2.Position - item.Position).Length) item.Up = item2;
                         }
                     }
                     if (angle >= new asd.Vector2DF(item.Size.X / 2, -item.Size.Y / 2).Degree && angle < item.Size.Degree)
@@ -79,7 +79,7 @@ namespace BaseComponent.UI
                         if (item.Right == null) item.Right = item2;
                         else
                         {
-                            if ((item.Right.Owner.Position - item.Owner.Position).Length >= (item2.Owner.Position - item.Owner.Position).Length) item.Right = item2;
+                            if ((item.Right.Position - item.Position).Length >= (item2.Position - item.Position).Length) item.Right = item2;
                         }
                     }
                     if (angle >= item.Size.Degree && angle < new asd.Vector2DF(-item.Size.X / 2, item.Size.Y / 2).Degree)
@@ -87,7 +87,7 @@ namespace BaseComponent.UI
                         if (item.Down == null) item.Down = item2;
                         else
                         {
-                            if ((item.Down.Owner.Position - item.Owner.Position).Length >= (item2.Owner.Position - item.Owner.Position).Length) item.Down = item2;
+                            if ((item.Down.Position - item.Position).Length >= (item2.Position - item.Position).Length) item.Down = item2;
                         }
                     }
                     if ((angle >= new asd.Vector2DF(-item.Size.X / 2, item.Size.Y / 2).Degree && angle <= 180)
@@ -96,7 +96,7 @@ namespace BaseComponent.UI
                         if (item.Left == null) item.Left = item2;
                         else
                         {
-                            if ((item.Left.Owner.Position - item.Owner.Position).Length >= (item2.Owner.Position - item.Owner.Position).Length) item.Left = item2;
+                            if ((item.Left.Position - item.Position).Length >= (item2.Position - item.Position).Length) item.Left = item2;
                         }
                     }
                 }
