@@ -96,7 +96,7 @@ namespace BaseComponent.UI
             get
             {
                 if (Owner is asd.TextObject2D text)
-                    return Owner.Position + text.Font?.CalcTextureSize(text.Text, asd.WritingDirection.Horizontal).To2DF() ?? new asd.Vector2DF() / 2;
+                    return Owner.Position + (text.Font?.CalcTextureSize(text.Text, asd.WritingDirection.Horizontal).To2DF() ?? new asd.Vector2DF()) / 2;
                 else if (Owner is asd.GeometryObject2D geo)
                     if (geo.Shape is asd.RectangleShape rect)
                         return Owner.Position + rect.DrawingArea.Position + rect.DrawingArea.Size / 2;
