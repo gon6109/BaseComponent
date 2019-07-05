@@ -30,10 +30,7 @@ namespace BaseComponent
                 PreState = state;
                 state = value;
                 if (AnimationPart.ContainsKey(value))
-                {
-                    if (PreState != state) AnimationPart[value].Reset();
                     Texture = AnimationPart[value].CurrentTexture;
-                }
             }
             get
             {
@@ -201,6 +198,15 @@ namespace BaseComponent
                 clone.AnimationPart.Add(item.Key, (AnimationPart)item.Value.Clone());
             }
             return clone;
+        }
+
+        /// <summary>
+        /// 現在のアニメーションを最初のフレームにする
+        /// </summary>
+        void ResetCurrentStateAnimation()
+        {
+            if (AnimationPart.ContainsKey(state))
+                animationPart[state].Reset();
         }
     }
 
