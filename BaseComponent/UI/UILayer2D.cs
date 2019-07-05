@@ -28,7 +28,8 @@ namespace BaseComponent.UI
             set
             {
                 if (_focusedUIElement == value) return;
-                value.IsFocused = true;
+                if (value != null)
+                    value.IsFocused = true;
                 if (_focusedUIElement != null) _focusedUIElement.IsFocused = false;
                 _focusedUIElement = value;
                 OnChangedFocusedUIElement();
@@ -59,11 +60,12 @@ namespace BaseComponent.UI
             {
                 item.ResetConnection();
             }
+            FocusedUIElement = null;
 
             elements.Sort((a, b) => Math.Sign(a.Size.X * a.Size.Y - b.Size.X * b.Size.Y));
             foreach (var item in elements)
             {
-                foreach (var item2 in elements.Where(obj => obj != item)) 
+                foreach (var item2 in elements.Where(obj => obj != item))
                 {
                     var angle = (item2.Position - item.Position).Degree;
                     if (angle >= (-item.Size).Degree && angle < new asd.Vector2DF(item.Size.X / 2, -item.Size.Y / 2).Degree)
