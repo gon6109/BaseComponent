@@ -65,7 +65,7 @@ namespace BaseComponent.UI
             elements.Sort((a, b) => Math.Sign(a.Size.X * a.Size.Y - b.Size.X * b.Size.Y));
             foreach (var item in elements.Where(obj => obj.IsEnable))
             {
-                foreach (var item2 in elements.Where(obj => obj != item))
+                foreach (var item2 in elements.Where(obj => obj.IsEnable && obj != item))
                 {
                     var angle = (item2.Position - item.Position).Degree;
                     if (angle >= (-item.Size).Degree && angle < new asd.Vector2DF(item.Size.X / 2, -item.Size.Y / 2).Degree)
@@ -104,7 +104,7 @@ namespace BaseComponent.UI
                 }
             }
 
-            FocusedUIElement = elements.LastOrDefault();
+            FocusedUIElement = elements.Where(obj => obj.IsEnable).LastOrDefault();
         }
 
         protected override void OnUpdating()
