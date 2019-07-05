@@ -63,7 +63,7 @@ namespace BaseComponent.UI
             FocusedUIElement = null;
 
             elements.Sort((a, b) => Math.Sign(a.Size.X * a.Size.Y - b.Size.X * b.Size.Y));
-            foreach (var item in elements)
+            foreach (var item in elements.Where(obj => obj.IsEnable))
             {
                 foreach (var item2 in elements.Where(obj => obj != item))
                 {
