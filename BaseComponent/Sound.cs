@@ -83,6 +83,11 @@ namespace BaseComponent
         /// </summary>
         public bool IsMultiplePlay { get; set; }
 
+        /// <summary>
+        /// ID
+        /// </summary>
+        public int ID => id;
+
         public Sound(string path, bool isMultiplePlay = true, bool isDecompressed = false)
         {
             if (path == null) return;
