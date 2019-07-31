@@ -34,9 +34,9 @@ namespace BaseComponent
             sound.sound.LoopStartingPoint = startPoint != null ? (float)startPoint : 0;
             sound.sound.LoopEndPoint = endPoint != null ? (float)endPoint : sound.sound.Length;
             Bgm = sound;
-            Bgm.id = asd.Engine.Sound.Play(sound.sound);
-            asd.Engine.Sound.SetVolume(Bgm.id, 0);
-            asd.Engine.Sound.Fade(Bgm.id, fade, BgmVolume);
+            Bgm.id = asd.Engine.Sound.Play(Bgm.sound);
+            asd.Engine.Sound.SetVolume(Bgm.id, BgmVolume);
+            asd.Engine.Sound.FadeIn(Bgm.id, fade);
         }
 
         /// <summary>
@@ -92,6 +92,8 @@ namespace BaseComponent
         {
             if (path == null) return;
             sound = asd.Engine.Sound.CreateSoundSource(path, isDecompressed);
+            if (sound == null)
+                Logger.Error(path + "not found.");
         }
 
         /// <summary>
