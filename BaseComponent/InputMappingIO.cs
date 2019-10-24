@@ -46,7 +46,7 @@ namespace BaseComponent
     }
 
     [Serializable]
-    public class InputMapping
+    public class InputMapping : ICloneable
     {
         public bool IsAxis;
         public int ButtonNumber;
@@ -89,6 +89,18 @@ namespace BaseComponent
                 AxisType = joystick.AxisType,
                 Key = keyboard.Key,
             };
+        }
+
+        public object Clone()
+        {
+            var clone = new InputMapping();
+            clone.IsAxis = IsAxis;
+            clone.ButtonNumber = ButtonNumber;
+            clone.AxisNumber = AxisNumber;
+            clone.AxisThreshold = AxisThreshold;
+            clone.AxisType = AxisType;
+            clone.Key = Key;
+            return clone;
         }
     }
 }
