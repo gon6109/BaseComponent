@@ -109,7 +109,7 @@ namespace BaseComponent
         IEnumerator<object> GetAlphaCoroutine(asd.DrawnObject2D object2D, AlphaAnimationElement alpha)
         {
             Byte start = alpha.isRequireFrom ? alpha.from : object2D.Color.A;
-            for (int i = 0; i < alpha.frame; i++)
+            for (int i = 1; i <= alpha.frame; i++)
             {
                 var color = object2D.Color;
                 color.A = (byte)GetEasing(alpha.easing, i, start, alpha.to, alpha.frame);

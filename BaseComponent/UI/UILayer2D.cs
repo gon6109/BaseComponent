@@ -28,7 +28,8 @@ namespace BaseComponent.UI
             set
             {
                 if (_focusedUIElement == value) return;
-                value.IsFocused = true;
+                if (value != null)
+                    value.IsFocused = true;
                 if (_focusedUIElement != null) _focusedUIElement.IsFocused = false;
                 _focusedUIElement = value;
                 OnChangedFocusedUIElement();
@@ -59,50 +60,51 @@ namespace BaseComponent.UI
             {
                 item.ResetConnection();
             }
+            FocusedUIElement = null;
 
             elements.Sort((a, b) => Math.Sign(a.Size.X * a.Size.Y - b.Size.X * b.Size.Y));
-            foreach (var item in elements)
+            foreach (var item in elements.Where(obj => obj.IsEnable))
             {
-                foreach (var item2 in elements.Where(obj => obj != item)) 
+                foreach (var item2 in elements.Where(obj => obj.IsEnable && obj != item))
                 {
-                    var angle = (item2.Owner.Position - item.Owner.Position).Degree;
+                    var angle = (item2.Position - item.Position).Degree;
                     if (angle >= (-item.Size).Degree && angle < new asd.Vector2DF(item.Size.X / 2, -item.Size.Y / 2).Degree)
                     {
                         if (item.Up == null) item.Up = item2;
                         else
                         {
-                            if ((item.Up.Owner.Position - item.Owner.Position).Length >= (item2.Owner.Position - item.Owner.Position).Length) item.Up = item2;
+                            if ((item.Up.Position - item.Position).Length >= (item2.Position - item.Position).Length) item.Up = item2;
                         }
                     }
-                    if (angle >= new asd.Vector2DF(item.Size.X / 2, -item.Size.Y / 2).Degree && angle < item.Size.Degree)
+                    else if (angle >= new asd.Vector2DF(item.Size.X / 2, -item.Size.Y / 2).Degree && angle < item.Size.Degree)
                     {
                         if (item.Right == null) item.Right = item2;
                         else
                         {
-                            if ((item.Right.Owner.Position - item.Owner.Position).Length >= (item2.Owner.Position - item.Owner.Position).Length) item.Right = item2;
+                            if ((item.Right.Position - item.Position).Length >= (item2.Position - item.Position).Length) item.Right = item2;
                         }
                     }
-                    if (angle >= item.Size.Degree && angle < new asd.Vector2DF(-item.Size.X / 2, item.Size.Y / 2).Degree)
+                    else if (angle >= item.Size.Degree && angle < new asd.Vector2DF(-item.Size.X / 2, item.Size.Y / 2).Degree)
                     {
                         if (item.Down == null) item.Down = item2;
                         else
                         {
-                            if ((item.Down.Owner.Position - item.Owner.Position).Length >= (item2.Owner.Position - item.Owner.Position).Length) item.Down = item2;
+                            if ((item.Down.Position - item.Position).Length >= (item2.Position - item.Position).Length) item.Down = item2;
                         }
                     }
-                    if ((angle >= new asd.Vector2DF(-item.Size.X / 2, item.Size.Y / 2).Degree && angle <= 180)
+                    else if ((angle >= new asd.Vector2DF(-item.Size.X / 2, item.Size.Y / 2).Degree && angle <= 180)
                         || (angle >= -180 && angle < (-item.Size).Degree))
                     {
                         if (item.Left == null) item.Left = item2;
                         else
                         {
-                            if ((item.Left.Owner.Position - item.Owner.Position).Length >= (item2.Owner.Position - item.Owner.Position).Length) item.Left = item2;
+                            if ((item.Left.Position - item.Position).Length >= (item2.Position - item.Position).Length) item.Left = item2;
                         }
                     }
                 }
             }
 
-            FocusedUIElement = elements.LastOrDefault();
+            FocusedUIElement = elements.Where(obj => obj.IsEnable).LastOrDefault();
         }
 
         protected override void OnUpdating()

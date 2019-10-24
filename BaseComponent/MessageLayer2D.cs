@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace BaseComponent
@@ -6,6 +7,7 @@ namespace BaseComponent
     /// <summary>
     /// メッセージ出力系
     /// </summary>
+    [Obsolete]
     public class MessageLayer2D : asd.Layer2D
     {
         static public int FontSize { set; get; } = 12;

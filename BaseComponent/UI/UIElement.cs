@@ -89,6 +89,27 @@ namespace BaseComponent.UI
         }
 
         /// <summary>
+        /// UIの基準座標
+        /// </summary>
+        public asd.Vector2DF Position
+        {
+            get
+            {
+                if (Owner is asd.TextObject2D text)
+                    return Owner.Position + (text.Font?.CalcTextureSize(text.Text, asd.WritingDirection.Horizontal).To2DF() ?? new asd.Vector2DF()) / 2;
+                else if (Owner is asd.GeometryObject2D geo)
+                    if (geo.Shape is asd.RectangleShape rect)
+                        return Owner.Position + rect.DrawingArea.Position + rect.DrawingArea.Size / 2;
+                    else if (geo.Shape is asd.CircleShape circle)
+                        return Owner.Position + circle.Position;
+                    else
+                        return Owner.Position;
+                else
+                    return Owner.Position;
+            }
+        }
+
+        /// <summary>
         /// 接続を消去
         /// </summary>
         public void ResetConnection()
