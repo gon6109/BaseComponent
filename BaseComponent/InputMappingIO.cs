@@ -62,6 +62,22 @@ namespace BaseComponent
             Down
         }
 
+        public bool Compare(InputMapping to, bool isKey)
+        {
+            if (isKey)
+                return Key == to.Key;
+            else
+            {
+                if (IsAxis != to.IsAxis)
+                    return false;
+
+                if (IsAxis)
+                    return AxisNumber == to.AxisNumber && AxisType == to.AxisType && AxisThreshold == to.AxisThreshold;
+                else
+                    return ButtonNumber == to.ButtonNumber;
+            }
+        }
+
         public static InputMapping MergeMapping(InputMapping keyboard, InputMapping joystick)
         {
             return new InputMapping()
