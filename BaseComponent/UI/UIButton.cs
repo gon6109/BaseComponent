@@ -45,7 +45,7 @@ namespace BaseComponent.UI
 
         protected override void OnUpdate()
         {
-            if (UI.IsEnable && UI.IsFocused && Input.GetInputState(Inputs.A) == 1)
+            if (UI.IsSelected)
                 OnSelected();
             base.OnUpdate();
         }

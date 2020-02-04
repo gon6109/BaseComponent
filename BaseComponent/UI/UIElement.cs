@@ -83,7 +83,7 @@ namespace BaseComponent.UI
             get
             {
                 if (Owner?.Layer is UILayer2D layer)
-                    return layer.IsMoveFocus && IsEnable && IsFocused && Input.GetInputState(Inputs.A) == 1;
+                    return layer.IsMoveFocus && IsEnable && IsFocused && GetIsSelectedFunc();
                 return false;
             }
         }
@@ -125,5 +125,10 @@ namespace BaseComponent.UI
         {
             IsEnable = true;
         }
+
+        /// <summary>
+        /// 選択条件
+        /// </summary>
+        public static Func<bool> GetIsSelectedFunc　= delegate { return Input.GetInputState(Inputs.A) == 1; };
     }
 }

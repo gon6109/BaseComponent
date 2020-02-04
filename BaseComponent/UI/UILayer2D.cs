@@ -111,12 +111,32 @@ namespace BaseComponent.UI
         {
             if (IsMoveFocus)
             {
-                if (Input.GetInputState(Inputs.Up) == 1) FocusedUIElement = FocusedUIElement.Up ?? FocusedUIElement;
-                if (Input.GetInputState(Inputs.Right) == 1) FocusedUIElement = FocusedUIElement.Right ?? FocusedUIElement;
-                if (Input.GetInputState(Inputs.Left) == 1) FocusedUIElement = FocusedUIElement.Left ?? FocusedUIElement;
-                if (Input.GetInputState(Inputs.Down) == 1) FocusedUIElement = FocusedUIElement.Down ?? FocusedUIElement;
+                if (GetIsPushedUpFunc()) FocusedUIElement = FocusedUIElement.Up ?? FocusedUIElement;
+                if (GetIsPushedRightFunc()) FocusedUIElement = FocusedUIElement.Right ?? FocusedUIElement;
+                if (GetIsPushedLeftFunc()) FocusedUIElement = FocusedUIElement.Left ?? FocusedUIElement;
+                if (GetIsPushedDownFunc()) FocusedUIElement = FocusedUIElement.Down ?? FocusedUIElement;
             }
             base.OnUpdating();
         }
+
+        /// <summary>
+        /// 上押下判定
+        /// </summary>
+        public static Func<bool> GetIsPushedUpFunc = delegate { return Input.GetInputState(Inputs.Up) == 1; };
+
+        /// <summary>
+        /// 下押下判定
+        /// </summary>
+        public static Func<bool> GetIsPushedDownFunc = delegate { return Input.GetInputState(Inputs.Down) == 1; };
+
+        /// <summary>
+        /// 左押下判定
+        /// </summary>
+        public static Func<bool> GetIsPushedLeftFunc = delegate { return Input.GetInputState(Inputs.Left) == 1; };
+
+        /// <summary>
+        /// 右押下判定
+        /// </summary>
+        public static Func<bool> GetIsPushedRightFunc = delegate { return Input.GetInputState(Inputs.Right) == 1; };
     }
 }
