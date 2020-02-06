@@ -30,8 +30,8 @@ namespace BaseComponent
                 {
                     case MoveAnimationElement move:
                         {
-                            var coRutine = GetMoveCoroutine(object2D, move);
-                            while (coRutine.MoveNext())
+                            var coroutine = GetMoveCoroutine(object2D, move);
+                            while (coroutine.MoveNext())
                             {
                                 yield return null;
                             }
@@ -39,8 +39,8 @@ namespace BaseComponent
                         break;
                     case ScaleAnimationElement scale:
                         {
-                            var coRutine = GetScaleCoroutine(object2D, scale);
-                            while (coRutine.MoveNext())
+                            var coroutine = GetScaleCoroutine(object2D, scale);
+                            while (coroutine.MoveNext())
                             {
                                 yield return null;
                             }
@@ -48,8 +48,8 @@ namespace BaseComponent
                         break;
                     case RotateAnimationElement rotate:
                         {
-                            var coRutine = GetRotateCoroutine(object2D, rotate);
-                            while (coRutine.MoveNext())
+                            var coroutine = GetRotateCoroutine(object2D, rotate);
+                            while (coroutine.MoveNext())
                             {
                                 yield return null;
                             }
@@ -57,8 +57,8 @@ namespace BaseComponent
                         break;
                     case AlphaAnimationElement alpha:
                         {
-                            var coRutine = GetAlphaCoroutine(object2D, alpha);
-                            while (coRutine.MoveNext())
+                            var coroutine = GetAlphaCoroutine(object2D, alpha);
+                            while (coroutine.MoveNext())
                             {
                                 yield return null;
                             }
@@ -68,6 +68,15 @@ namespace BaseComponent
                         for (int i = 0; i < sleep.frame; i++)
                         {
                             yield return null;
+                        }
+                        break;
+                    case UserAnimationElement user:
+                        {
+                            var coroutine = GetUserAnimationCoroutine(object2D, user);
+                            while (coroutine.MoveNext())
+                            {
+                                yield return null;
+                            }
                         }
                         break;
                     default:
@@ -118,7 +127,16 @@ namespace BaseComponent
             }
         }
 
-        float GetEasing(Easing easing, int current, float start, float end, int frame)
+        IEnumerator<object> GetUserAnimationCoroutine(asd.DrawnObject2D object2D, UserAnimationElement userAnimation)
+        {
+            for (int i = 1; i <= userAnimation.frame; i++)
+            {
+                userAnimation.easingFunc(userAnimation.easing, i, userAnimation.frame, object2D);
+                yield return null;
+            }
+        }
+
+        public float GetEasing(Easing easing, int current, float start, float end, int frame)
         {
             if (current == 0) return start;
             if (current == frame) return end;
@@ -392,6 +410,23 @@ namespace BaseComponent
         {
             public byte to;
             public byte from;
+        }
+
+        public void AnimateUserFunc(int frame, Action<Easing, int, int, asd.Object2D> easingFunc, Easing easing = Easing.Linear)
+        {
+            var element = new UserAnimationElement
+            {
+                frame = frame > 0 ? frame : 1,
+                easing = easing,
+                isRequireFrom = false,
+                easingFunc = easingFunc
+            };
+            animationElements.Add(element);
+        }
+
+        class UserAnimationElement : BaseAnimationElement
+        {
+            public Action<Easing, int, int, asd.Object2D> easingFunc;
         }
 
         public void Sleep(int frame)
